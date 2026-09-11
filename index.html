@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiftly - My Shifts</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo">Shiftly</div>
+        <div class="user-menu">
+            <span id="userGreeting" class="greeting">Hello - Username</span>
+            <a href="index.html" class="nav-link">My Shifts</a>
+            <a href="edit-profile.html" class="nav-link">Edit Profile</a>
+            <a href="#" id="logoutBtn" class="nav-link logout">Log out</a>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="filters">
+            <input type="text" id="searchPlace" placeholder="Search by shift place..." class="search-input">
+            <div class="date-range">
+                <input type="date" id="startDate" class="date-input">
+                <span>to</span>
+                <input type="date" id="endDate" class="date-input">
+            </div>
+            <button id="filterBtn" class="primary-btn">Search</button>
+        </section>
+        <div class="table-container">
+            <table id="shiftTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Hourly Wage</th>
+                        <th>Shift Place</th>
+                        <th>Total Profit</th>
+                    </tr>
+                </thead>
+                <tbody id="shiftTableBody">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="highest-earning">
+            🏆 Highest Earning Month: <span id="highestMonthDisplay">N/A</span>
+        </div>
+
+        <button class="fab-add" onclick="window.location.href='add-shift.html'" aria-label="Add Shift">+</button>
+    </main>
+
+    <footer class="bottom-footer">
+        <div class="footer-menu">
+            <a href="index.html">My Shifts</a>
+            <a href="add-shift.html">Add Shift</a>
+            <a href="edit-profile.html">Profile</a>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+</body>
+</html>

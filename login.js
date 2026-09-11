@@ -32,6 +32,6 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
         expiry: new Date().getTime()+3600000
     };
 
-    localStorage.setItem('shiftly_login_data',JSON.stringify(loginData));
+    localStorage.setItem('shiftly_session',JSON.stringify(loginData));
     window.location.href='index.html';
 });
