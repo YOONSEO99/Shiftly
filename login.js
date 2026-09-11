@@ -12,9 +12,17 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
         return;
     }
 
-    const usernameRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d])/;
-    if(!usernameRegex.test(username)){
-        errorElement.textContent='A username must contain letters, numbers and a character that is neither a letter nor a number.'
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d])/;
+    if(!passwordRegex.test(password)){
+        errorElement.textContent='A password must contain letters, numbers and a character that is neither a letter nor a number.'
+        return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('shiftly_users')) || [];
+    const matchedUser = users.find(u=>u.username===username&&u.password===password);
+
+    if(!matchedUser){
+        errorElement.textContent = 'Invalid username or password.';
         return;
     }
 
@@ -25,6 +33,5 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
     };
 
     localStorage.setItem('shiftly_login_data',JSON.stringify(loginData));
-
     window.location.href='index.html';
 });

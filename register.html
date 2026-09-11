@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiftly - Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Shiftly</h1>
+        <h2>Create an Account</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password (Min 6 characters)</label>
+                <input type="password" id="password" placeholder="e.g., dfg327!" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Password Confirmation</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+            <button type="submit" id="registerBtn">Register</button>
+        </form>
+        <div class="reset-section" style="margin-top: 20px; text-align:center;">
+            <a href="#" id="resetPasswordBtn" style="color:#e74c3c; font-size: 0.85rem;">Forgot password? (Warning: Resets ALL data)</a>
+        </div>
+
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+    <script src="register.js"></script>
+</body>
+</html>
