@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiftly - Add Shift</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="add-shift.css">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo">Shiftly</div>
+        <div class="user-menu">
+            <a href="index.html" class="nav-link">Cancel & Back</a>
+        </div>
+    </header>
+
+    <main class="main-container auth-container" style="margin-top: 40px; margin-bottom: 80px;">
+        <h2>Add a New Shift</h2>
+        <form id="addShiftForm">
+            <div class="form-group">
+                <label for="shiftDate">Date Selection</label>
+                <input type="date" id="shiftDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="startTime">Start Time</label>
+                <input type="time" id="startTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="endTime">End Time</label>
+                <input type="time" id="endTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hourlyWage">Hourly Wage ($)</label>
+                <input type="number" id="hourlyWage" step="0.01" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="workplace">Workplace</label>
+                <select id="workplace" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Select a workplace...</option>
+                    <option value="Sushi Garden">Sushi Garden</option>
+                    <option value="KDD Event Prep">KDD Event Prep</option>
+                    <option value="Freelance Web">Freelance Web</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="shiftSlug">Shift Slug (Unique Name)</label>
+                <input type="text" id="shiftSlug" placeholder="e.g., mar-19-sushi" required>
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea id="comments" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <button type="submit" id="saveBtn">
+                <span id="btnText">Save Shift</span>
+                <div id="spinner" class="spinner" style="display: none;"></div>
+            </button>
+        </form>
+    </main>
+
+    <script src="add-shift.js"></script>
+</body>
+</html>
