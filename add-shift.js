@@ -5,6 +5,31 @@ document.addEventListener('DOMContentLoaded',function(){
         return;
     }
 
+    let shifts = JSON.parse(localStorage.getItem('shiftly_shifts')) || [];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const editId = urlParams.get('id');
+    let isEditMode = false;
+
+    if(editId){
+        isEditMode = true;
+        const shiftToEdit = shifts.find(s=>s.id.toString()===editId);
+
+        if (shiftToEdit) {
+            const headerTitle = document.querySelector('h2');
+            if(headerTitle) headerTitle.textContent = 'Edit Shift';
+            document.getElementById('btnText').textContent = 'Update Shift';
+            
+            document.getElementById('shiftDate').value = shiftToEdit.date;
+            document.getElementById('startTime').value = shiftToEdit.startTime;
+            document.getElementById('endTime').value = shiftToEdit.endTime;
+            document.getElementById('hourlyWage').value = shiftToEdit.wage;
+            document.getElementById('workplace').value = shiftToEdit.place;
+            document.getElementById('shiftSlug').value = shiftToEdit.slug;
+            document.getElementById('comments').value = shiftToEdit.comments || '';
+        }
+    }
+
     document.getElementById('addShiftForm').addEventListener('submit',function(e){
         e.preventDefault();
 
@@ -21,7 +46,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
         let shifts = JSON.parse(localStorage.getItem('shiftly_shifts')) || [];
 
-        const slugExists = shifts.some(shift=>shift.slug===shiftSlug);
+        const slugExists = shifts.some(shift=>shift.slug===shiftSlug && shift.id.toString() !== editId);
         if(slugExists){
             errorElement.textContent = 'This Shift Slug already exists. Please choose a new name.';
             return;
@@ -33,12 +58,12 @@ document.addEventListener('DOMContentLoaded',function(){
 
         saveBtn.disabled = true;
         saveBtn.style.backgroundColor = '#95a5a6';
-        btnText.textContent = 'Saving...';
+        btnText.textContent = isEditMode? 'Updating...' : 'Saving...';
         spinner.style.display = 'block';
 
         setTimeout(() => {
-            const newShift = {
-                id: Date.now(), 
+            const shiftDataObj = {
+                id: isEditMode? Number(editId) : Date.now(), 
                 username: sessionData.username, 
                 date: shiftDate,
                 startTime: startTime,
@@ -49,7 +74,12 @@ document.addEventListener('DOMContentLoaded',function(){
                 comments: comments
             };
 
-            shifts.push(newShift);
+            if (isEditMode){
+                shifts = shifts.map(s=>s.id.toString()===editId?shiftDataObj:s);
+            }else{
+                shifts.push(shiftDataObj);
+            }
+            
             localStorage.setItem('shiftly_shifts', JSON.stringify(shifts));
             window.location.href = 'index.html';
         }, 1500);

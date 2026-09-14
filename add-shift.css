@@ -1,7 +1,7 @@
 body {
     display: block; 
     padding: 0;
-    background-color: #f4f7f6;
+    background-color: #f3f4f6;
 }
 
 .top-bar {
@@ -16,7 +16,7 @@ body {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #3498db;
+    color: #0d9488;
 }
 
 .user-menu {
@@ -25,13 +25,14 @@ body {
 }
 
 .nav-link {
-    color: #7f8c8d;
+    color: #6b7280;
     text-decoration: none;
     font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .nav-link:hover {
-    color: #3498db;
+    color: #0d9488;
 }
 
 .main-container.auth-container {
@@ -60,5 +61,5 @@ body {
 
 textarea {
     resize: vertical;
-    font-family: Arial, sans-serif;
+    font-family: inherit; 
 }

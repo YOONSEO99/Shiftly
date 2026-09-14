@@ -60,7 +60,11 @@ function renderTable(shiftArray){
             <td>${shift.endTime}</td>
             <td>$${Number(shift.wage).toFixed(2)}</td>
             <td>${shift.place}</td>
-            <td style="color: #2ecc71; font-weight: bold;">$${totalProfit.toFixed(2)}</td>
+            <td style="font-weight: 600;">
+                <span style="background-color: #d1fae5; color: #065f46; padding: 4px 10px; border-radius: 999px; font-size: 0.9em;">
+                    $${totalProfit.toFixed(2)}
+                </span>
+            </td>
         `;
         tbody.appendChild(tr);
     });
