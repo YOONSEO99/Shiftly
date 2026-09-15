@@ -1,3 +1,23 @@
+function getPlaceBadgeStyle(placeName){
+    const palettes = [
+        { bg: '#e0e7ff', text: '#3730a3' }, 
+        { bg: '#fef3c7', text: '#92400e' }, 
+        { bg: '#fce7f3', text: '#9d174d' }, 
+        { bg: '#dbeafe', text: '#1e40af' }, 
+        { bg: '#f3e8ff', text: '#6b21a8' }, 
+        { bg: '#ffedd5', text: '#9a3412' }  
+    ];
+    
+    let hash = 0;
+    for (let i = 0; i < placeName.length; i++) {
+        hash = placeName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % palettes.length;
+    const color = palettes[index];
+    
+    return `background-color: ${color.bg}; color: ${color.text}; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; white-space: nowrap;`;
+}
+
 document.addEventListener('DOMContentLoaded',function(){
     const sessionData = JSON.parse(localStorage.getItem('shiftly_session'));
     if(!sessionData){
@@ -59,8 +79,12 @@ function renderTable(shiftArray){
             <td>${shift.startTime}</td>
             <td>${shift.endTime}</td>
             <td>$${Number(shift.wage).toFixed(2)}</td>
-            <td>${shift.place}</td>
-            <td style="font-weight: 600;">
+            <td style="font-weight: 500;">
+                <span style="${getPlaceBadgeStyle(shift.place)}">
+                    ${shift.place}
+                </span>
+            </td>
+            <td style="font-weight: 500;">
                 <span style="background-color: #d1fae5; color: #065f46; padding: 4px 10px; border-radius: 999px; font-size: 0.9em;">
                     $${totalProfit.toFixed(2)}
                 </span>
