@@ -42,12 +42,11 @@
 
             <div class="form-group">
                 <label for="workplace">Workplace</label>
-                <select id="workplace" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                    <option value="">Select a workplace...</option>
-                    <option value="Sushi Garden">Sushi Garden</option>
-                    <option value="KDD Event Prep">KDD Event Prep</option>
-                    <option value="Freelance Web">Freelance Web</option>
-                </select>
+                <input type="text" id="workplace" list="placeOptions" placeholder="Select or type a new place..." required>
+    
+                <datalist id="placeOptions">
+       
+                </datalist>
             </div>
 
             <div class="form-group">

@@ -7,6 +7,19 @@ document.addEventListener('DOMContentLoaded',function(){
 
     let shifts = JSON.parse(localStorage.getItem('shiftly_shifts')) || [];
 
+    let savedPlaces = JSON.parse(localStorage.getItem('shiftly_places')) || [];
+    if(!savedPlaces || savedPlaces.length === 0){
+        savedPlaces = ['Sushi Garden', 'KDD Event Prep', 'Freelance'];
+        localStorage.setItem('shiftly_places',JSON.stringify(savedPlaces));
+    } 
+
+    const dataList = document.getElementById('placeOptions');
+    savedPlaces.forEach(place => {
+        const option = document.createElement('option');
+        option.value=place;
+        dataList.appendChild(option);
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     const editId = urlParams.get('id');
     let isEditMode = false;
@@ -40,7 +53,7 @@ document.addEventListener('DOMContentLoaded',function(){
         const startTime = document.getElementById('startTime').value;
         const endTime = document.getElementById('endTime').value;
         const hourlyWage =document.getElementById('hourlyWage').value;
-        const workplace = document.getElementById('workplace').value;
+        const workplace = document.getElementById('workplace').value.trim();
         const shiftSlug = document.getElementById('shiftSlug').value.trim();
         const comments = document.getElementById('comments').value;
 
@@ -62,6 +75,11 @@ document.addEventListener('DOMContentLoaded',function(){
         spinner.style.display = 'block';
 
         setTimeout(() => {
+            if (!savedPlaces.includes(workplace)){
+                savedPlaces.push(workplace);
+                localStorage.setItem('shiftly_places',JSON.stringify(savedPlaces));
+            }
+
             const shiftDataObj = {
                 id: isEditMode? Number(editId) : Date.now(), 
                 username: sessionData.username, 
