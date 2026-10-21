@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(){
     const sessionData = JSON.parse(localStorage.getItem('shiftly_session'));
-    if(!sessionData){
+    const currentTime = new Date().getTime();
+
+    if(!sessionData || currentTime > sessionData.expiry){
+        alert('Session expired. Please log in again.');
+        localStorage.removeItem('shiftly_session');
         window.location.href = 'login.html';
         return;
     }  
@@ -47,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         if(newPassword!==confirmPassword){
-            return showError('Password Confirmation must be the same as the password.')
+            return showError('Password Confirmation must be the same as the password.');
         }
 
         if(newFirstName.length<2 || newLastName.length<2){

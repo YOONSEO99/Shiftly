@@ -20,7 +20,12 @@ function getPlaceBadgeStyle(placeName){
 
 document.addEventListener('DOMContentLoaded',function(){
     const sessionData = JSON.parse(localStorage.getItem('shiftly_session'));
-    if(!sessionData){
+    const currentTime = new Date().getTime();
+
+    // [수정] 60분 세션 만료 체크 로직 추가
+    if(!sessionData || currentTime > sessionData.expiry){
+        alert('Session expired. Please log in again.');
+        localStorage.removeItem('shiftly_session');
         window.location.href = 'login.html';
         return;
     }
@@ -32,30 +37,24 @@ document.addEventListener('DOMContentLoaded',function(){
         window.location.href='login.html';
     });
 
-    let shifts = JSON.parse(localStorage.getItem('shiftly_shifts'));
-    if(!shifts||shifts.length===0){
-        shifts = [
-            { id: 1, date: '2026-03-12', startTime: '10:00', endTime: '15:00', wage: 18.5, place: 'Sushi Hanabi', comment: '' },
-            { id: 2, date: '2026-03-14', startTime: '13:00', endTime: '17:00', wage: 20, place: 'KDD Event Prep', comment: '' },
-            { id: 3, date: '2026-04-05', startTime: '09:00', endTime: '18:00', wage: 25, place: 'Freelance Web', comment: '' }
-        ];
-        localStorage.setItem('shiftly_shifts', JSON.stringify(shifts));
-    }
+    let allShifts = JSON.parse(localStorage.getItem('shiftly_shifts')) || [];
+    
+    let userShifts = allShifts.filter(shift => shift.username === sessionData.username);
 
-    renderTable(shifts);
-    calculateHighestMonth(shifts);
+    renderTable(userShifts);
+    calculateHighestMonth(userShifts);
 
     document.getElementById('filterBtn').addEventListener('click',function(){
         const placeQuery = document.getElementById('searchPlace').value.toLowerCase();
         const start = document.getElementById('startDate').value;
         const end = document.getElementById('endDate').value;
 
-        let filtered = shifts.filter(shift => {
+        let filtered = userShifts.filter(shift => {
             let matchPlace = shift.place.toLowerCase().includes(placeQuery);
             let matchDate = true;
 
             if (start && shift.date < start) matchDate = false;
-            if (end&&shift.date > end) matchDate = false;
+            if (end && shift.date > end) matchDate = false;
 
             return matchPlace && matchDate;
         });
@@ -67,6 +66,19 @@ document.addEventListener('DOMContentLoaded',function(){
 function renderTable(shiftArray){
     const tbody = document.getElementById('shiftTableBody');
     tbody.innerHTML='';
+
+    if (shiftArray.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 50px 20px; color: #6b7280; background-color: #f9fafb;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">📭</div>
+                    <h3 style="margin-bottom: 5px; color: #374151;">No shifts found</h3>
+                    <p style="font-size: 0.9rem;">You haven't added any shifts yet. Click the + button to start!</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
 
     shiftArray.forEach(shift =>{
         const tr = document.createElement('tr');
@@ -105,7 +117,10 @@ function calculateProfit(start,end,wage){
 }
 
 function calculateHighestMonth(shiftArray) {
-    if (shiftArray.length === 0) return;
+    if (shiftArray.length === 0) {
+        document.getElementById('highestMonthDisplay').textContent = 'N/A';
+        return;
+    }
 
     const monthlyProfits = {};
 

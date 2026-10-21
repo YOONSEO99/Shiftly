@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded',function(){
     const sessionData = JSON.parse(localStorage.getItem('shiftly_session'));
-    if(!sessionData){
+    const currentTime = new Date().getTime();
+
+    if(!sessionData || currentTime > sessionData.expiry){
+        alert('Session expired. Please log in again.');
+        localStorage.removeItem('shiftly_session');
         window.location.href='login.html';
         return;
     }
@@ -52,7 +56,7 @@ document.addEventListener('DOMContentLoaded',function(){
         const shiftDate = document.getElementById('shiftDate').value;
         const startTime = document.getElementById('startTime').value;
         const endTime = document.getElementById('endTime').value;
-        const hourlyWage =document.getElementById('hourlyWage').value;
+        const hourlyWage = document.getElementById('hourlyWage').value;
         const workplace = document.getElementById('workplace').value.trim();
         const shiftSlug = document.getElementById('shiftSlug').value.trim();
         const comments = document.getElementById('comments').value;
